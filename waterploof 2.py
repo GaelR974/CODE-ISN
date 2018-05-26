@@ -94,8 +94,12 @@ def principale():
     x_obstacle=randint(60,740)
     y_obstacle=0
 
-    perso_vitesse=1
-    score_actuel =0
+    perso_vitesse = 1
+    obstacle_vitesse = 0.5
+    obstacle_vitesse_step = 0.1
+    score_palier = 5
+    score_prochain_palier = 5
+    score_actuel = 0
     horloge.tick(60)
     
     game_over=False
@@ -131,7 +135,7 @@ def principale():
 
 
         fenetre.blit(fond,(0,0))
-        y_obstacle +=0.5
+        y_obstacle += obstacle_vitesse
         obstacle(x_obstacle,y_obstacle)
         
         #Obstacle fin
@@ -149,6 +153,10 @@ def principale():
             game0ver()
 
         perso(x,y,img)
+
+        if score_prochain_palier == score_actuel :
+        	score_prochain_palier = score_prochain_palier + score_palier
+        	obstacle_vitesse += obstacle_vitesse_step
 
         score(score_actuel)
 
