@@ -96,10 +96,9 @@ while not game_over:
                     is_muted=False
 
                 else:
-
-                Son.set_volume(0)#Sinon on mute
-                is_muted=True
-                print('key m press')
+                    Son.set_volume(0)#Sinon on mute
+                    is_muted=True
+                    print('key m press')
  
    
     
