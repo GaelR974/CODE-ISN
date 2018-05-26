@@ -31,8 +31,6 @@ Son = pygame.mixer.Sound("chillpiano.wav")
 Son.play(loops=-1, maxtime=0, fade_ms=0)
 
 volume_origin = Son.get_volume()
-is_muted=False
-
 
 
 def score(compte):
@@ -81,14 +79,7 @@ def message (texte):
 
 def game0ver():
     message("BOOM!")
-     
-    
-
  
- 
-for event in pygame.event.get():
-    if event.type==pygame.KEYDOWN:
-        else:
 def obstacle(x_obstacle,y_obstacle):
     fenetre.blit(boule,(x_obstacle,y_obstacle))
     
@@ -111,7 +102,7 @@ def principale():
     horloge.tick(60)
     
     game_over=False
-    
+    is_muted=False 
     pygame.display.update()
      
     #Valeur a ajuster en fonction du gameplay voulu
@@ -131,6 +122,7 @@ def principale():
                         x_mouvement=10
                         x+=x_mouvement
                         print('key press ->')
+                    
                     if event.key ==pygame.K_m:
                         if is_muted :
                             Son.set_volume(volume_origin)# On est mute ?
