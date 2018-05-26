@@ -83,9 +83,7 @@ def game0ver():
 
  
  
-#On sauvegarde le volume avant afin de le remettre à l'origine
 volume_origin = Son.get_volume()
-#Le progamme n'est pas mute au demarage
 is_muted=False
 
 while not game_over:
