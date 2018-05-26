@@ -88,17 +88,16 @@ volume_origin = Son.get_volume()
 #Le progamme n'est pas mute au demarage
 is_muted=False
 
-while not game_over:
-        for event in pygame.event.get():
-            if event.type==pygame.KEYDOWN:
-                if event.key ==pygame.K_m:
-                    Son.set_volume(volume_origin)# On est mute ?
-                    is_muted=False
+for event in pygame.event.get():
+    if event.type==pygame.KEYDOWN:
+        if event.key ==pygame.K_m:
+            Son.set_volume(volume_origin)# On est mute ?
+            is_muted=False
 
-                else:
-                    Son.set_volume(0)#Sinon on mute
-                    is_muted=True
-                    print('key m press')
+        else:
+            Son.set_volume(0)#Sinon on mute
+            is_muted=True
+            print('key m press')
  
    
     
@@ -155,6 +154,7 @@ def principale():
 
                  
                     
+
 
         fenetre.blit(fond,(0,0))
         y_obstacle +=0.5
