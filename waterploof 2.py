@@ -96,7 +96,6 @@ def principale():
     x_obstacle=randint(60,740)
     y_obstacle=0
 
-
     perso_vitesse=1
     score_actuel =0
     horloge.tick(60)
@@ -106,7 +105,7 @@ def principale():
     pygame.display.update()
      
     #Valeur a ajuster en fonction du gameplay voulu
-    pygame.key.set_repeat(20,10)
+    pygame.key.set_repeat(100,10)
     while not game_over:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -140,6 +139,9 @@ def principale():
         fenetre.blit(fond,(0,0))
         y_obstacle +=0.5
         obstacle(x_obstacle,y_obstacle)
+        if y_obstacle > y :
+            x_obstacle=randint(60,740)
+            y_obstacle=0
         perso(x,y,img)
 
 
