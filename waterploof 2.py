@@ -30,6 +30,9 @@ boule= pygame.image.load("obstacle.png")
 Son = pygame.mixer.Sound("chillpiano.wav")
 Son.play(loops=-1, maxtime=0, fade_ms=0)
 
+volume_origin = Son.get_volume()
+is_muted=False
+
 
 
 def score(compte):
@@ -83,30 +86,9 @@ def game0ver():
 
  
  
-volume_origin = Son.get_volume()
-is_muted=False
-
 for event in pygame.event.get():
     if event.type==pygame.KEYDOWN:
-        if event.key ==pygame.K_m:
-            Son.set_volume(volume_origin)# On est mute ?
-            is_muted=False
-
         else:
-            Son.set_volume(0)#Sinon on mute
-            is_muted=True
-            print('key m press')
- 
-   
-    
-                        
-                   
-                           
-                         
-                            
-                            
-                       
-
 def obstacle(x_obstacle,y_obstacle):
     fenetre.blit(boule,(x_obstacle,y_obstacle))
     
@@ -149,6 +131,15 @@ def principale():
                         x_mouvement=10
                         x+=x_mouvement
                         print('key press ->')
+                    if event.key ==pygame.K_m:
+                        if is_muted :
+                            Son.set_volume(volume_origin)# On est mute ?
+                            is_muted=False
+                        else:
+                            Son.set_volume(0)#Sinon on mute
+                            is_muted=True
+                        print('key m press')
+ 
 
                  
                     
