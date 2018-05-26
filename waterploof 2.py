@@ -138,6 +138,7 @@ def principale():
         if y_obstacle > fenetreH - 60 :
             x_obstacle=randint(60,740)
             y_obstacle=0
+            score_actuel += 1
 
         # Conflit
         Perso_rect = pygame.Rect((x,y),taille_Perso)
