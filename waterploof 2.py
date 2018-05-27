@@ -8,9 +8,9 @@ pygame.init()
 fenetreL=800
 fenetreH=500
 taille_Perso=(60,60)
-Perso_rect = pygame.Rect((0,0),taille_Perso)
+
 taille_obstacle=(60,60)
-obstacle_rect = pygame.Rect((0,0),taille_obstacle)
+
 
 perso= pygame.display.set_mode(taille_Perso)
 obstacle = pygame.display.set_mode(taille_obstacle)
@@ -86,8 +86,6 @@ def obstacle(x_obstacle,y_obstacle):
 def perso(x,y,img):
     fenetre.blit(img,(x,y))
 
-
-
 def principale():
     x=365
     y=440
@@ -97,6 +95,10 @@ def principale():
     y_obstacle=0
 
     perso_vitesse=1
+    obstacle_vitesse=0.7
+    obstacle_vitesse_step = 0.175
+    score_palier = 5
+    score_prochain_palier = 5
     score_actuel =0
     horloge.tick(60)
     
@@ -130,36 +132,39 @@ def principale():
                             Son.set_volume(0)#Sinon on mute
                             is_muted=True
                         print('key m press')
- 
-
-                 
-                    
 
 
         fenetre.blit(fond,(0,0))
-        y_obstacle +=0.5
+        y_obstacle +=obstacle_vitesse
         obstacle(x_obstacle,y_obstacle)
-        if y_obstacle > y :
+        
+        #Obstacle fin
+        if y_obstacle > fenetreH - 60 :
             x_obstacle=randint(60,740)
             y_obstacle=0
-        perso(x,y,img)
-
-
-        score(score_actuel)
+            score_actuel += 1
             
 
-        
+        # Conflit
+        Perso_rect = pygame.Rect((x,y),taille_Perso)
+        obstacle_rect = pygame.Rect((x_obstacle,y_obstacle),taille_obstacle)
 
-        
-        
-        
-        
+        if obstacle_rect.colliderect(Perso_rect) :
+            print('Conflit')
+            game0ver()
+
+        perso(x,y,img)
+
+        if score_prochain_palier == score_actuel:
+            score_prochain_palier = score_prochain_palier + score_palier
+            obstacle_vitesse += obstacle_vitesse_step
+            
+
+        score(score_actuel)
 
         if x>fenetreL-40 or x<-10:
             game0ver()
             
-        
-        
         pygame.display.update()
  
  
