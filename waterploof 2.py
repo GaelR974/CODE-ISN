@@ -26,9 +26,9 @@ horloge = pygame.time.Clock()
 img= pygame.image.load("perso.png")
 
 boule= pygame.image.load("obstacle.png")
-
+#Assignation des variables pour le son
 Son = pygame.mixer.Sound("chillpiano.wav")
-Son.play()
+Son.play()#lecture du son
 SonFin=pygame.mixer.Sound("Son END.wav")
 SonPalier=pygame.mixer.Sound("Son palier.wav")
 
@@ -50,12 +50,11 @@ def rejoueOUquitte ():
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
-        elif event.type == pygame.KEYUP:
+        elif event.type == pygame.KEYUP:#Appuie sur un touche pour rejouer
             continue
-        Son.play()
-        is_stoped=False
-        SonFin.set_volume(0)
-        is_muted=True
+        Son.play()#L'utilisateur appuie sur la touche et relance la musique
+        SonFin.stop()#Stop la musique de la collision
+        
         return event.key
     return None
     
@@ -101,17 +100,16 @@ def principale():
 
     x_obstacle=randint(60,740)
     y_obstacle=0
-
+    #Definition pour la vitesse de l'obstacle
     perso_vitesse=1
     obstacle_vitesse=0.7
     obstacle_vitesse_step = 0.15
     score_palier = 10
     score_prochain_palier = 10
     score_actuel =0
-    horloge.tick(60)
+    horloge.tick(30)
     
     game_over=False
-    is_stoped=False
     is_muted=False 
     pygame.display.update()
      
@@ -161,10 +159,10 @@ def principale():
 
         if obstacle_rect.colliderect(Perso_rect) :
                     print('Conflit')
-                    SonFin.play(loops=0, maxtime=0, fade_ms=0)
-                    is_stoped=False
+                    SonFin.play()#lecture du son de la collision
+                    print('musique fin')
 
-                    Son.stop()
+                    Son.stop()#son principale s'arrete
                 
                    
                     print('son muted')
@@ -174,22 +172,20 @@ def principale():
 
         perso(x,y,img)
 
-        if score_prochain_palier == score_actuel:
-            score_prochain_palier = score_prochain_palier + score_palier
-            obstacle_vitesse += obstacle_vitesse_step
-            SonPalier.play()
-            SonPalier.set_volume(70)
-            Son.set_volume(40)
+        if score_prochain_palier == score_actuel:#si c'est egale alors
+            score_prochain_palier = score_prochain_palier + score_palier #le palier augmente
+            obstacle_vitesse += obstacle_vitesse_step #la vitesse de l'obstacle augmente aussi
+            SonPalier.play()#Le son se met à jouer
+            
             
             
 
         score(score_actuel)
 
         if x>fenetreL-40 or x<-10:
-            SonFin.play(loops=0, maxtime=0, fade_ms=0)
-            is_stoped=False
+            SonFin.play(loops=0, maxtime=0, fade_ms=0)#le son se met a jouer si il touche les bord
 
-            Son.stop()
+            Son.stop()#le son principale s'arrete
             game0ver()
             
         pygame.display.update()
