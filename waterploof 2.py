@@ -28,9 +28,12 @@ img= pygame.image.load("perso.png")
 boule= pygame.image.load("obstacle.png")
 
 Son = pygame.mixer.Sound("chillpiano.wav")
-Son.play(loops=-1, maxtime=0, fade_ms=0)
+Son.play()
+SonFin=pygame.mixer.Sound("Son END.wav")
+SonPalier=pygame.mixer.Sound("Son palier.wav")
 
 volume_origin = Son.get_volume()
+volume_originFin= SonFin.get_volume()
 
 
 def score(compte):
@@ -49,8 +52,13 @@ def rejoueOUquitte ():
             quit()
         elif event.type == pygame.KEYUP:
             continue
+        Son.play()
+        is_stoped=False
+        SonFin.set_volume(0)
+        is_muted=True
         return event.key
     return None
+    
     
 
 def creaTexteObj(texte,Police):
@@ -96,18 +104,19 @@ def principale():
 
     perso_vitesse=1
     obstacle_vitesse=0.7
-    obstacle_vitesse_step = 0.175
-    score_palier = 5
-    score_prochain_palier = 5
+    obstacle_vitesse_step = 0.15
+    score_palier = 10
+    score_prochain_palier = 10
     score_actuel =0
     horloge.tick(60)
     
     game_over=False
+    is_stoped=False
     is_muted=False 
     pygame.display.update()
      
     #Valeur a ajuster en fonction du gameplay voulu
-    pygame.key.set_repeat(100,10)
+    pygame.key.set_repeat(70,10)
     while not game_over:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -148,21 +157,39 @@ def principale():
         # Conflit
         Perso_rect = pygame.Rect((x,y),taille_Perso)
         obstacle_rect = pygame.Rect((x_obstacle,y_obstacle),taille_obstacle)
+        
 
         if obstacle_rect.colliderect(Perso_rect) :
-            print('Conflit')
-            game0ver()
+                    print('Conflit')
+                    SonFin.play(loops=0, maxtime=0, fade_ms=0)
+                    is_stoped=False
+
+                    Son.stop()
+                
+                   
+                    print('son muted')
+
+
+                    game0ver()
 
         perso(x,y,img)
 
         if score_prochain_palier == score_actuel:
             score_prochain_palier = score_prochain_palier + score_palier
             obstacle_vitesse += obstacle_vitesse_step
+            SonPalier.play()
+            SonPalier.set_volume(70)
+            Son.set_volume(40)
+            
             
 
         score(score_actuel)
 
         if x>fenetreL-40 or x<-10:
+            SonFin.play(loops=0, maxtime=0, fade_ms=0)
+            is_stoped=False
+
+            Son.stop()
             game0ver()
             
         pygame.display.update()
